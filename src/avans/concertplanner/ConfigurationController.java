@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-import avans.concertplanner.model.ConfigurationModel;
+import avans.concertplanner.model.Configuration;
 
 /**
  * Contains all functions related to the config file
@@ -15,9 +15,9 @@ import avans.concertplanner.model.ConfigurationModel;
 
 public class ConfigurationController {
 	
-	public ConfigurationModel getConfigFromFile() throws IOException {
+	public Configuration getConfigFromFile() throws IOException {
 		InputStream inputStream = null;
-		ConfigurationModel configurationModel = new ConfigurationModel("", "", "", "", "");
+		Configuration configurationModel = new Configuration("", "", "", "", "");
 		try {
 			Properties prop = new Properties();
 			String propFileName = "config.properties";

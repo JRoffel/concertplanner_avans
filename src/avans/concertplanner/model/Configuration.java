@@ -6,7 +6,7 @@ package avans.concertplanner.model;
  *
  */
 
-public class ConfigurationModel {
+public class Configuration {
 	private String m_host;
 	private String m_port;
 	private String m_databaseName;
@@ -33,7 +33,7 @@ public class ConfigurationModel {
 	public String getPassword() { return m_password; }
 	public void setPassword(String pass) { m_password = pass; }
 	
-	public ConfigurationModel(String host, String port, String databaseName, String user, String password) {
+	public Configuration(String host, String port, String databaseName, String user, String password) {
 		setHost(host);
 		setPort(port);
 		setDatabaseName(databaseName);

@@ -1,8 +1,13 @@
 package avans.concertplanner;
 
 import java.io.IOException;
+import java.util.List;
 
+import avans.concertplanner.model.Artist;
+import avans.concertplanner.model.Configuration;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -19,7 +24,32 @@ public class MainApp extends Application {
 	
 	private Stage primaryStage;
 	private BorderPane rootLayout;
+	private ConfigurationController configurationController;
+	private DatabaseController databaseController;
+	private ObservableList<Artist> artistData = FXCollections.observableArrayList();
 
+	public MainApp() {
+		configurationController = new ConfigurationController();
+		Configuration conf = null;
+		
+		try {
+			conf = configurationController.getConfigFromFile();
+			databaseController = new DatabaseController(conf.getHost(), conf.getPort(), conf.getDatabaseName(), conf.getUser(), conf.getPassword());
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+		
+		List<Artist> artists = databaseController.getAllArtists();
+		
+		for (Artist artist : artists) {
+			artistData.add(artist);
+		}
+	}
+	
+	public ObservableList<Artist> getArtistData() {
+		return artistData;
+	}
+	
 	@Override
 	public void start(Stage primaryStage) {
 		this.primaryStage = primaryStage;
