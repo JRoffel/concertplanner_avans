@@ -173,7 +173,7 @@ public class DatabaseController {
 	}
 	
 	public void editArtist(Artist newArtist) {
-		String query = "UPDATE artist SET name=" + newArtist.getName() + ", description=" + newArtist.getDescription() + " WHERE id=" + newArtist.getId();
+		String query = "UPDATE artist SET name='" + newArtist.getName() + "', description='" + newArtist.getDescription() + "' WHERE id=" + newArtist.getId();
 		try {
 			executeUpdate(query);
 		} catch(SQLException ex) {
@@ -191,7 +191,7 @@ public class DatabaseController {
 	}
 	
 	public void editStage(Stage newStage) {
-		String query = "UPDATE stage SET name=" + newStage.getName() + ", description=" + newStage.getDescription() + " WHERE id=" + newStage.getId();
+		String query = "UPDATE stage SET name='" + newStage.getName() + "', description='" + newStage.getDescription() + "' WHERE id=" + newStage.getId();
 		try {
 			executeUpdate(query);
 		} catch(SQLException ex) {
@@ -204,6 +204,24 @@ public class DatabaseController {
 		String query = "INSERT INTO performance(artistId, stageId, startTime, endTime) VALUES (" + id + ", " + stages.get(0).getId() + ", '" + LocalDateTime.now() + "', '" + LocalDateTime.now() + "')";
 		try {
 			System.out.println(query);
+			executeUpdate(query);
+		} catch(SQLException ex) {
+			ex.printStackTrace();
+		}
+	}
+	
+	public void createNewArtist(String name, String description) {
+		String query = "INSERT INTO artist(name, description) VALUES ('" + name + "', '" + description + "');";
+		try {
+			executeUpdate(query);
+		} catch(SQLException ex) {
+			ex.printStackTrace();
+		}
+	}
+	
+	public void createNewStage(String name, String description) {
+		String query = "INSERT INTO stage(name, description) VALUES ('" + name + "', '" + description + "');";
+		try {
 			executeUpdate(query);
 		} catch(SQLException ex) {
 			ex.printStackTrace();

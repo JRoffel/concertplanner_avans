@@ -1,38 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.gluonhq.charm.glisten.control.ToggleButtonGroup?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="446.0" prefWidth="313.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111" fx:controller="avans.concertplanner.view.CreateController">
+<AnchorPane prefHeight="446.0" prefWidth="313.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="avans.concertplanner.view.CreateController">
    <children>
-      <ToggleButtonGroup layoutX="38.0" layoutY="49.0" selectionType="SINGLE">
-          <toggles>
-              <ToggleButton prefHeight="25.0" prefWidth="110.0">
-               <graphic>
-                  <Label text="Artist" />
-               </graphic>
-              </ToggleButton>
-              <ToggleButton prefHeight="25.0" prefWidth="126.0" selected="true">
-               <graphic>
-                  <Label text="Stage" />
-               </graphic>
-              </ToggleButton>
-          </toggles>
-      </ToggleButtonGroup>
-      <TextField layoutX="38.0" layoutY="110.0" text="Name" />
-      <TextArea layoutX="38.0" layoutY="150.0" prefHeight="200.0" prefWidth="200.0" text="Description&#10;" />
+      <TextField fx:id="nameField" layoutX="38.0" layoutY="110.0" text="Name" />
+      <TextArea fx:id="descriptionField" layoutX="38.0" layoutY="150.0" prefHeight="200.0" prefWidth="200.0" text="Description&#10;" />
       <ButtonBar layoutX="87.0" layoutY="382.0" prefHeight="40.0" prefWidth="200.0">
         <buttons>
-          <Button mnemonicParsing="false" text="OK" />
-            <Button mnemonicParsing="false" text="Cancel" />
+          <Button mnemonicParsing="false" onAction="#okClicked" text="OK" />
+            <Button mnemonicParsing="false" onAction="#cancelClicked" text="Cancel" />
         </buttons>
       </ButtonBar>
+      <RadioButton fx:id="stageField" layoutX="38.0" layoutY="14.0" mnemonicParsing="false" text="Stage" />
+      <RadioButton fx:id="artistField" layoutX="38.0" layoutY="42.0" mnemonicParsing="false" text="Artist" />
    </children>
 </AnchorPane>

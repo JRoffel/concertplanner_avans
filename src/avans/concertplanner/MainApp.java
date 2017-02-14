@@ -8,6 +8,9 @@ import avans.concertplanner.model.Artist;
 import avans.concertplanner.model.Concert;
 import avans.concertplanner.model.Configuration;
 import avans.concertplanner.view.ConcertOverviewController;
+import avans.concertplanner.view.CreateController;
+import avans.concertplanner.view.RootLayoutController;
+import avans.concertplanner.view.StageDialogController;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,6 +18,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -75,6 +79,9 @@ public class MainApp extends Application {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("view/RootLayout.fxml"));
 			rootLayout = (BorderPane) loader.load();
+			
+			RootLayoutController controller = loader.getController();
+			controller.setMainApp(this);
 			
 			// Show the scene with the retrieved root layout.
 			Scene scene = new Scene(rootLayout);
@@ -166,5 +173,81 @@ public class MainApp extends Application {
 	
 	public void createConcertForArtist(String id) {
 		databaseController.createConcertForArtist(id);
+	}
+	
+	public void createNewArtist(String name, String description) {
+		databaseController.createNewArtist(name, description);
+	}
+	
+	public void createNewStage(String name, String description) {
+		databaseController.createNewStage(name, description);
+	}
+	
+	public boolean showCreateDialog() {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(MainApp.class.getResource("view/CreateDialog.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+			
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Create");
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(primaryStage);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+			
+			CreateController controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+			controller.setMainApp(this);
+			
+			dialogStage.showAndWait();
+			
+			return controller.isOkClicked();
+		} catch(IOException ex) {
+			ex.printStackTrace();
+			return false;
+		}
+	}
+	
+	public void showStageDialog() {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(MainApp.class.getResource("view/StageDialog.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+			
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Edit/Delete");
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(primaryStage);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+			
+			StageDialogController controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+			controller.setMainApp(this);
+			
+			dialogStage.showAndWait();
+		} catch(IOException ex) {
+			ex.printStackTrace();
+		}
+	}
+	
+	public void setArtistName(String name, Artist oldArtist) {
+		oldArtist.setName(name);
+		databaseController.editArtist(oldArtist);
+		updateArtists();
+		
+	}
+	
+	public void setArtistDescription(String name, Artist oldArtist) {
+		oldArtist.setDescription(name);
+		databaseController.editArtist(oldArtist);
+		updateArtists();
+	}
+	
+	public void updateStage(String name, String desc, avans.concertplanner.model.Stage stage) {
+		stage.setName(name);
+		stage.setDescription(desc);
+		databaseController.editStage(stage);
 	}
 }

@@ -13,7 +13,6 @@ public class Artist {
 	private StringProperty m_id;
 	private StringProperty m_name;
 	private StringProperty m_description;
-	private ObjectProperty<Button> m_editButton;
 	private ObjectProperty<Button> m_deleteButton;
 	
 	public String getId() { return m_id.get(); }
@@ -27,8 +26,6 @@ public class Artist {
 	public void setDescription(String description) { m_description.set(description); }
 	public StringProperty getDescriptionProp() { return m_description; }
 	
-	public Button getEdit() { return m_editButton.get(); }
-	public ObjectProperty<Button> getEditProp() { return m_editButton; }
 	
 	public Button getDelete() { return m_deleteButton.get(); }
 	public ObjectProperty<Button> getDeleteProp() { return m_deleteButton; }
@@ -37,16 +34,11 @@ public class Artist {
 		m_id = new SimpleStringProperty(id);
 		m_name = new SimpleStringProperty(name);
 		m_description = new SimpleStringProperty(description);
-		m_editButton = new SimpleObjectProperty<Button>();
 		m_deleteButton = new SimpleObjectProperty<Button>();
 		
-		Button editButton = new Button("edit");
 		Button deleteButton = new Button("delete");
-		//TODO: Build edit dialog
-//		editButton.addEventHandler(ActionEvent.ACTION, event -> MainApp.showEditDialog(id));
 		deleteButton.addEventHandler(ActionEvent.ACTION, event -> MainApp.deleteArtist(id));
 		
-		m_editButton.set(editButton);
 		m_deleteButton.set(deleteButton);
 	}
 }

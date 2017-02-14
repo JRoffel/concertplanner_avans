@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="500.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="avans.concertplanner.view.StageDialogController">
+   <children>
+      <ComboBox fx:id="selectBox" layoutX="14.0" layoutY="14.0" prefWidth="150.0" />
+      <TextField fx:id="nameField" layoutX="15.0" layoutY="52.0" />
+      <TextField fx:id="descField" layoutX="15.0" layoutY="89.0" />
+   </children>
+</AnchorPane>

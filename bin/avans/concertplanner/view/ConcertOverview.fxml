@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 
-<AnchorPane prefHeight="450.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="avans.concertplanner.view.ConcertOverviewController">
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="avans.concertplanner.view.ConcertOverviewController">
    <children>
       <SplitPane dividerPositions="0.29797979797979796" layoutX="159.0" layoutY="70.0" prefHeight="300.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -35,7 +35,8 @@
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                   </GridPane>
-                  <Label fx:id="artistDescription" layoutX="14.0" layoutY="14.0" prefHeight="17.0" prefWidth="389.0" text="Description Artist" />
+                  <TextField fx:id="artistName" layoutX="14.0" layoutY="14.0" />
+                  <TextField fx:id="artistDescription" layoutX="14.0" layoutY="39.0" prefHeight="25.0" prefWidth="162.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" />
                </children>
             </AnchorPane>
         </items>

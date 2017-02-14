@@ -16,6 +16,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
@@ -33,7 +34,9 @@ public class ConcertOverviewController {
 	private GridPane gridPane;
 	
 	@FXML
-	private Label artistDescription;
+	private TextField artistDescription;
+	@FXML
+	private TextField artistName;
 	
 	private MainApp mainApp;
 	
@@ -44,8 +47,15 @@ public class ConcertOverviewController {
 	@FXML
 	private void initialize() {
 		artistColumn.setCellValueFactory(cellData -> cellData.getValue().getNameProp());
-		editColumn.setCellValueFactory(cellData -> cellData.getValue().getEditProp());
 		deleteColumn.setCellValueFactory(cellData -> cellData.getValue().getDeleteProp());
+//		artistColumn.setCellFactory(TextFieldTableCell.<Artist>forTableColumn());
+//		artistColumn.setOnEditCommit(
+//				(CellEditEvent<Artist, String> t) -> {
+//					((Artist) t.getTableView().getItems().get(
+//							t.getTablePosition().getRow())).mainApp.setArtistName(t.getNewValue());
+//				});
+		
+//		artistColumn.addEventHandler(ActionEvent.ACTION, event -> mainApp.setArtistName());
 		
 		showConcertDetails(null);
 		
@@ -61,11 +71,16 @@ public class ConcertOverviewController {
 	private void showConcertDetails(Artist artist) {
 		gridPane.getChildren().clear();
 		if(artist != null) {
+			artistName.setText(artist.getName());
 			artistDescription.setText(artist.getDescription());
+			artistName.addEventHandler(ActionEvent.ACTION, event -> mainApp.setArtistName(artistName.getText(), artist));
+			artistDescription.addEventHandler(ActionEvent.ACTION, event -> mainApp.setArtistDescription(artistDescription.getText(), artist));
 			List<Concert> concerts = mainApp.getConcertsFromArtistId(artist.getId());
 			int i = 0;
 			if(concerts.isEmpty()) {
-				gridPane.add(new Label("This artist is not giving a concert!"), 0, 1);
+				Button createButton = new Button("create");
+				createButton.addEventHandler(ActionEvent.ACTION, event -> createConcertForArtist(artist));
+				gridPane.add(createButton, 0, 1);
 			} else {
 				for(Concert concert : concerts) {
 					ComboBox<Stage> stage = new ComboBox<Stage>();
@@ -95,7 +110,7 @@ public class ConcertOverviewController {
 										setText("");
 									} else {
 										if(concert.getStageId() != null && t.getId() != null) {
-											mainApp.setConcertStage(concert.getStageId(), t.getId());
+											mainApp.setConcertStage(concert.getId(), t.getId());
 										}
 										setText(t.getName());
 									}
@@ -150,5 +165,13 @@ public class ConcertOverviewController {
 	public void createConcertForArtist(Artist artist) {
 		mainApp.createConcertForArtist(artist.getId());
 		showConcertDetails(artist);
+	}
+	
+	@FXML
+	private void showCreateDialog() {
+		boolean okClicked = mainApp.showCreateDialog();
+		if(okClicked) {
+			MainApp.updateArtists();
+		}
 	}
 }
